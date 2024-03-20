@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: scheduly_app
+    build:
+      context: .
+    env_file: .env
+    restart: unless-stopped
+    
+    ports:
+      - 3000:3000
+    networks:
+      - lorcan 
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+
+  db:
+    env_file: .env
+    image: postgres
+    restart: unless-stopped
+    container_name: scheduly_database
+    volumes: 
+      - lorcan_db:/var/lib/postgresql/data
+    networks:
+      - lorcan 
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    networks:
+      - lorcan 
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+volumes:
+  lorcan_db: {}
+
+networks:
+  lorcan:
+    driver: bridge

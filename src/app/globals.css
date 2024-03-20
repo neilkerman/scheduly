@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container{
+  @apply max-w-7xl mx-auto px-6;
+}
+
+.input-label{
+  @apply block text-sm font-semibold text-gray-500 mb-2;
+}
+
+.text-input{
+  @apply ring-1 ring-gray-300 focus:ring-blue-200 outline-none focus:outline-blue-200 rounded-xl w-full px-2 py-1.5 ;
+}
+
+.button{
+  @apply cursor-pointer text-blue-500 bg-blue-100 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300;
+}
